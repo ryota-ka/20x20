@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <title>20×20</title>
+  </head>
+  <body>
+    <div id="calc">
+      <p id="left"></p>
+      <p id="times">×</p>
+      <p id="right"></p>
+      <p id="equal">=</p>
+      <p id="answer"></p>
+    </div>
+
+    <ol id="answers">
+    </ol>
+
+    <div id="help">
+      <ul>
+        <li>0-9: 数字を入力</li>
+        <li>Enter: 答え合わせ</li>
+        <li>Backspace: 一文字削除</li>
+        <li>右下のマスをクリックすると出題される問題を選択できます</li>
+        <li>Shiftを押しながらクリックすると矩形選択ができます</li>
+        <li>IMEがオンになっていると正常に動作しません</li>
+      </ul>
+      <p id="closehelp">close</p>
+    </div>
+
+    <div id="background"></div>
+  </body>
+</html>

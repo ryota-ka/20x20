@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fcfcfc;
+}
+
+input {
+  cursor: default;
+  opacity: 0.8;
+}
+
+#calc {
+  margin-left: 50px;
+  margin-top: 50px;
+  padding: 0;
+  opacity:0.8;
+  color: #bbb;
+  font-size: 80px;
+}
+
+#calc p {
+  width: 80px;
+  height: 80px;
+  float: left;
+  text-align: center;
+}
+
+#answer {
+  width: 160px;
+}
+
+#answers {
+  clear: left;
+  list-style: none;
+  color: #999;
+  opacity: 0.8;
+  font-size: 30px;
+  margin-left: 50px;
+  padding-top: 50px;
+}
+
+span.iscorrect {
+  color: #f44;
+  font-size: 25px;
+}
+
+#background {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  opacity: 0.6;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+  float: left;
+  border-radius: 2px;
+  background-color: #bbd;
+  margin: 1px;
+}
+
+.cell.disabled {
+  background-color: #aaa;
+}
+
+.cell.current {
+  background-color: #ff8;
+}
+
+#help {
+  display: none;
+  background-color: black;
+  color: white;
+  opacity: 0.5;
+  border-radius: 10px;
+  width: 70%;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+#help li {
+  list-style-type: none;
+  margin: 5px;
+}
+
+#closehelp {
+  cursor: pointer;
+  padding-top: 10px;
+}
