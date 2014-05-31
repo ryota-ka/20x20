@@ -1,4 +1,6 @@
 $(function(){
+  canvas = document.getElementById('background');
+  ctx = canvas.getContext('2d');
   drawBackground();
   init();
 
@@ -49,15 +51,10 @@ $(function(){
   }
 
   function drawBackground() {
-    for (i=0; i<20; i++) {
-      for (j=0; j<20; j++) {
-        $('#background').append('<div id="cell' + '-' + (i + 1) + '-' + (j + 1) +'" class="cell"></div>');
-        if (j == 0) {
-          $('#background .cell:last-child').css('clear', 'left');
-        }
-        if (!isEnabledCell(i+1, j+1)) {
-          $('#background .cell:last-child').addClass('disabled');
-        }
+    ctx.fillStyle = 'rgba(64, 64, 224, 0.7)';
+    for (var i = 0; i < 20; i++) {
+      for (var j = 0; j < 20; j++) {
+        ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
       }
     }
   }
