@@ -5,6 +5,8 @@
 
 body {
   background-color: #fcfcfc;
+  font-family: 'Open Sans', san-serif;
+  font-weight: 300;
 }
 
 input {
@@ -48,10 +50,9 @@ span.iscorrect {
 }
 
 #background {
-  position: absolute;
+  position: fixed;
   right: 30px;
   bottom: 30px;
-  opacity: 0.6;
 }
 
 .cell {
