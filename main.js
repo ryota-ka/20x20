@@ -1,14 +1,17 @@
 $(function(){
   canvas = document.getElementById('background');
   ctx = canvas.getContext('2d');
+  cells = new Array(400);
+  for (var i = 0; i < 400; i++) {
+    cells[i] = true;
+  }
   drawBackground();
   init();
 
   function init() {
-    do {
-      left = Math.floor(Math.random() * 20) + 1;
-      right = Math.floor(Math.random() * 20) + 1;
-    } while (!isEnabledCell(left, right));
+    var pair = getPair();
+    var left = pair[0];
+    var right = pair[1];
     $('#left').text(left);
     $('#right').text(right);
     $('#answer').text('?');
@@ -59,6 +62,48 @@ $(function(){
     }
   }
 
+  $(canvas).click(function(e) {
+    var x = e.pageX - $(canvas).offset().left;
+    var y = e.pageY - $(canvas).offset().top;
+    var tx = x - Math.floor(x / 120) * 2 - 5
+    var ty = y - Math.floor(y / 120) * 2 - 5
+    if ((tx % 23) >= 0 && (tx % 23) <= 20 && (ty % 23) >= 0 && (ty % 23) <= 20) {
+      tx = Math.floor(tx / 23);
+      ty = Math.floor(ty / 23);
+      toggleCell(tx, ty);
+    }
+  });
+
+  $(canvas).mousedown(function(e) {
+    var x = e.pageX - $(canvas).offset().left;
+    var y = e.pageY - $(canvas).offset().top;
+    $(canvas).mouseup(function(e) {
+    });
+  });
+  // DOM で黄色い四角を描こう
+
+  function getPair() {
+    var arr = new Array(), pair = new Array(2), num;
+    for (var key in cells) {
+      if (cells[key]) {
+        arr.push(key);
+      }
+    }
+    num = Math.floor(Math.random() * arr.length);
+    pair[0] = Math.ceil(arr[num] / 20);
+    pair[1] = (arr[num] % 20) + 1;
+    return pair;
+  }
+
+  function toggleCell(i, j) {
+    var index = 20 * i + j;
+    console.log('index: ' + index);
+    cells[index] = !cells[index];
+    ctx.clearRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
+    ctx.fillStyle = cells[index] ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
+    ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
+  }
+
   $('.cell').click(function(event){
     str = $(this).attr('id').split('-');
     i_this = str[1];
@@ -104,54 +149,8 @@ $(function(){
     }
   });
 
-  function isEnabledCell(i, j) {
-    if (readCookie()) {
-      return readCell(i, j) == 1 ? true : false;
-    } else {
-      writeCookie('0000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111');
-      return ((i > 10) || (j > 10));
-    }
-  }
-
-  function readCell(i, j) {
-    return readCookie().substr(getFromZero(i, j), 1);
-  }
-
-  function writeCell(i, j, isEnabled) {
-    data = readCookie();
-    before = data.slice(0, getFromZero(i, j));
-    after = data.slice(getFromZero(i, j) + 1);
-    writeCookie(before + (isEnabled ? 1 : 0) + after);
-    return;
-  }
-
   function getFromZero(i, j) {
     return 20 * (i - 1) + (j - 1);
-  }
-
-  function readCookie() {
-    if (document.cookie) {
-      var cookies = document.cookie.split("; ");
-      for (var i = 0; i < cookies.length; i++) {
-        var str = cookies[i].split("=");
-        if (str[0] == 'cells' && str[1].length == 400 && str[1] != '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000') {
-          cells = str[1];
-          return cells;
-        }
-      }
-      return false;
-    } else {
-      return false;
-    }
-  }
-
-  function writeCookie(data) {
-    if (data.length == 400) {
-      expires = new Date();
-      expires.setTime(expires.getTime() + 86400 * 365);
-      document.cookie = 'cells=' + data + '; expires=' + expires.toUTCString();
-    }
-    return;
   }
 
   $('#closehelp').click(function(){
