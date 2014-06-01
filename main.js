@@ -62,22 +62,28 @@ $(function(){
     }
   }
 
-  $(canvas).click(function(e) {
-    var x = e.pageX - $(canvas).offset().left;
-    var y = e.pageY - $(canvas).offset().top;
-    var tx = x - Math.floor(x / 120) * 2 - 5
-    var ty = y - Math.floor(y / 120) * 2 - 5
-    if ((tx % 23) >= 0 && (tx % 23) <= 20 && (ty % 23) >= 0 && (ty % 23) <= 20) {
-      tx = Math.floor(tx / 23);
-      ty = Math.floor(ty / 23);
-      toggleCell(tx, ty);
-    }
-  });
-
   $(canvas).mousedown(function(e) {
-    var x = e.pageX - $(canvas).offset().left;
-    var y = e.pageY - $(canvas).offset().top;
+    var beforeX = e.pageX - $(canvas).offset().left;
+    var beforeY = e.pageY - $(canvas).offset().top;
     $(canvas).mouseup(function(e) {
+      var bx = beforeX;
+      var by = beforeY;
+      var ax = e.pageX - $(canvas).offset().left;
+      var ay = e.pageY - $(canvas).offset().top;
+      var lx = Math.min(bx, ax);
+      var ty = Math.min(by, ay);
+      var rx = Math.max(bx, ax);
+      var by = Math.max(by, ay);
+      var li = Math.floor((lx - Math.floor(lx / 120) * 2 - 5) / 23);
+      var tj = Math.floor((ty - Math.floor(ty / 120) * 2 - 5) / 23);
+      var ri = Math.floor((rx - Math.floor(rx / 120) * 2 - 5) / 23);
+      var bj = Math.floor((by - Math.floor(by / 120) * 2 - 5) / 23);
+      for (var i = li; i <= ri; i++) {
+        for (var j = tj; j <= bj; j++) {
+          toggleCell(i, j);
+        }
+      }
+      $(canvas).unbind('mouseup');
     });
   });
   // DOM で黄色い四角を描こう
@@ -96,12 +102,14 @@ $(function(){
   }
 
   function toggleCell(i, j) {
-    var index = 20 * i + j;
-    console.log('index: ' + index);
-    cells[index] = !cells[index];
-    ctx.clearRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
-    ctx.fillStyle = cells[index] ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
-    ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
+    if (i >= 0 && i < 20 && j>= 0 && j < 20) {
+      var index = 20 * i + j;
+      console.log('index: ' + index);
+      cells[index] = !cells[index];
+      ctx.clearRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
+      ctx.fillStyle = cells[index] ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
+      ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
+    }
   }
 
   $('.cell').click(function(event){
