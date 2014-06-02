@@ -5,6 +5,8 @@ $(function(){
   for (var i = 0; i < 400; i++) {
     cells[i] = true;
   }
+  $dragIndicator = $('#dragIndicator');
+
   drawBackground();
   init();
 
@@ -65,6 +67,19 @@ $(function(){
   $(canvas).mousedown(function(e) {
     var beforeX = e.pageX - $(canvas).offset().left;
     var beforeY = e.pageY - $(canvas).offset().top;
+    $dragIndicator.show().css({left: e.pageX - $(canvas).offset().left, top: e.pageY - $(canvas).offset().top});
+    $(canvas).mousemove(function(e) {
+      var w = e.pageX - $(canvas).offset().left - beforeX;
+      var h = e.pageY - $(canvas).offset().top - beforeY;
+      $('#answers').text(w + ', ' + h);
+      if (w < 0) {
+        $dragIndicator.css('left', beforeX + w);
+      }
+      if (h < 0) {
+        $dragIndicator.css('top', beforeX + h);
+      }
+      $dragIndicator.css({width: Math.abs(w), height: Math.abs(h)});
+    });
     $(canvas).mouseup(function(e) {
       var bx = beforeX;
       var by = beforeY;
@@ -83,10 +98,10 @@ $(function(){
           toggleCell(i, j);
         }
       }
-      $(canvas).unbind('mouseup');
+      $(canvas).unbind('mousemove').unbind('mouseup');
+      $dragIndicator.hide();
     });
   });
-  // DOM で黄色い四角を描こう
 
   function getPair() {
     var arr = new Array(), pair = new Array(2), num;

@@ -47,28 +47,26 @@ span.iscorrect {
   font-size: 25px;
 }
 
-#background {
+#bgwrapper {
+  padding: 0;
   position: absolute;
+  width: 500px;
+  height: 500px;
   right: 30px;
   bottom: 30px;
+}
+
+#background {
+  position: absolute;
   opacity: 0.6;
 }
 
-.cell {
-  width: 20px;
-  height: 20px;
-  float: left;
-  border-radius: 2px;
-  background-color: #bbd;
-  margin: 1px;
-}
-
-.cell.disabled {
-  background-color: #aaa;
-}
-
-.cell.current {
-  background-color: #ff8;
+#dragIndicator {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 192, 0.3);
+  border: 1px solid rgba(244, 244, 128, 0.5);
 }
 
 #help {
