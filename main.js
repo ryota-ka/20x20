@@ -67,20 +67,19 @@ $(function(){
   $(canvas).mousedown(function(e) {
     var beforeX = e.pageX - $(canvas).offset().left;
     var beforeY = e.pageY - $(canvas).offset().top;
-    $dragIndicator.show().css({left: e.pageX - $(canvas).offset().left, top: e.pageY - $(canvas).offset().top});
-    $(canvas).mousemove(function(e) {
+    $dragIndicator.show().css({left: e.pageX - $(canvas).offset().left, top: e.pageY - $(canvas).offset().top, width: 0, height: 0});
+    $(window).mousemove(function(e) {
       var w = e.pageX - $(canvas).offset().left - beforeX;
       var h = e.pageY - $(canvas).offset().top - beforeY;
-      $('#answers').text(w + ', ' + h);
       if (w < 0) {
         $dragIndicator.css('left', beforeX + w);
       }
       if (h < 0) {
-        $dragIndicator.css('top', beforeX + h);
+        $dragIndicator.css('top', beforeY + h);
       }
       $dragIndicator.css({width: Math.abs(w), height: Math.abs(h)});
     });
-    $(canvas).mouseup(function(e) {
+    $(window).mouseup(function(e) {
       var bx = beforeX;
       var by = beforeY;
       var ax = e.pageX - $(canvas).offset().left;
@@ -98,7 +97,7 @@ $(function(){
           toggleCell(i, j);
         }
       }
-      $(canvas).unbind('mousemove').unbind('mouseup');
+      $(window).unbind('mousemove').unbind('mouseup');
       $dragIndicator.hide();
     });
   });
@@ -119,7 +118,6 @@ $(function(){
   function toggleCell(i, j) {
     if (i >= 0 && i < 20 && j>= 0 && j < 20) {
       var index = 20 * i + j;
-      console.log('index: ' + index);
       cells[index] = !cells[index];
       ctx.clearRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
       ctx.fillStyle = cells[index] ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
