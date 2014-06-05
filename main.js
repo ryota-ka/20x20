@@ -5,6 +5,7 @@ $(function(){
   for (var i = 0; i < 400; i++) {
     cells[i] = true;
   }
+  $answers = $('#answers');
   $dragIndicator = $('#dragIndicator');
 
   drawBackground();
@@ -43,10 +44,38 @@ $(function(){
       } else if (event.keyCode == 13) {
         text = $('#answer').text();
         if (text != '?') {
-          isCorrect = (text == (left * right));
-          $('#answers').prepend('<li><span class="iscorrect">' + (isCorrect ? '○' : '×') + '</span>&nbsp;' + (left < 10 ? ' ' : '') + left + ' × ' + (right < 10 ? ' ' : '') + right + ' = ' + (left * right) + (isCorrect ? '' : ', your answer was ' + text) + '</li>');
-          if ($('#answers li').length > 10) {
-            $('#answers li:last-child').remove();
+          var correctAnswer = right * left;
+          var isCorrect = (text == correctAnswer);
+
+          $answers.prepend('<tr>'
+              + '<td class="isCorrect ' + (isCorrect ? 'correct' : 'wrong') + '"></td>'
+              + '<td class="left">' + left + '</td>'
+              + '<td class="times">×<td>'
+              + '<td class="right">' + right + '</td>'
+              + '<td class="equal">=</td>'
+              + '<td class="answer' + (isCorrect ? '' : ' wrong') + '"><span>' + text + '</span></td>'
+              + '<td class="correctAnswer">' + (isCorrect ? '' : correctAnswer) + '</td>'
+              + '</tr>');
+
+          /*
+          var liDom = document.createElement('li');
+          var quiz = document.createElement('span');
+          var correctAnswer = document.createElement('span');
+          quiz.textContent = (left < 10 ? ' ' : '') + left + ' ×' + (right < 10 ? ' ' : '') + right + ' = ';
+          correctAnswer.textContent = left * right;
+          $(liDom).append(quiz);
+          if (!isCorrect) {
+            var wrongAnswer = document.createElement('span');
+            wrongAnswer.className = 'wrongAnswer';
+            wrongAnswer.textContent = text;
+            $(liDom).append(wrongAnswer);
+          }
+          $(liDom).append(correctAnswer);
+
+          $('#answers').prepend(liDom);
+*/
+          if ($('#answers tr').length > 10) {
+            $('#answers tr:last-child').remove();
           }
           init();
         }
