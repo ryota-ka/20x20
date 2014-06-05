@@ -36,17 +36,57 @@ input {
 
 #answers {
   clear: left;
-  list-style: none;
-  color: #999;
-  opacity: 0.8;
+  color: #888;
   font-size: 30px;
   margin-left: 50px;
   padding-top: 50px;
+  border-spacing: 2px 4px;
 }
 
-span.iscorrect {
-  color: #f44;
-  font-size: 25px;
+#answers tr {
+  height: 40px;
+  margin: 0;
+}
+
+td.isCorrect {
+  width: 4px;
+}
+
+td.isCorrect.correct {
+  background-color: #2ecc71;
+}
+
+td.isCorrect.wrong {
+  background-color: #e74c3c;
+}
+
+td.left {
+  padding-left: 7px;
+}
+
+td.left, td.right, td.equal {
+  width: 35px;
+  text-align: center;
+}
+
+td.times {
+  text-align: center;
+  width: 30px;
+}
+
+td.answer.wrong {
+  text-decoration: line-through;
+  color: #e74c3c;
+  padding-right: 10px;
+}
+
+td.answer.wrong span {
+  color: #888;
+}
+
+td.correctAnswer {
+  text-align: center;
+  color: #e74c3c;
 }
 
 #bgwrapper {
