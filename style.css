@@ -15,23 +15,29 @@ input {
 }
 
 #calc {
-  margin-left: 50px;
+  margin-left: 100px;
   margin-top: 50px;
   padding: 0;
   opacity:0.8;
-  color: #bbb;
+  color: #666;
   font-size: 80px;
 }
 
 #calc p {
-  width: 80px;
-  height: 80px;
   float: left;
   text-align: center;
 }
 
+#left, #right {
+  width: 95px;
+}
+
+#times, #equal {
+  width: 80px;
+}
+
 #answer {
-  width: 160px;
+  width: 120px;
 }
 
 #answers {
