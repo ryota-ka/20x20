@@ -122,7 +122,7 @@ $(function(){
       }
     }
     num = Math.floor(Math.random() * arr.length);
-    pair[0] = Math.ceil(arr[num] / 20);
+    pair[0] = Math.floor(arr[num] / 20) + 1;
     pair[1] = (arr[num] % 20) + 1;
     return pair;
   }
