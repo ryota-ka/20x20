@@ -76,7 +76,7 @@ $(function(){
     }
   }
 
-  $(canvas).mousedown(function(e) {
+  $(window).mousedown(function(e) {
     var beforeX = e.pageX - $(canvas).offset().left;
     var beforeY = e.pageY - $(canvas).offset().top;
     $dragIndicator.show().css({left: e.pageX - $(canvas).offset().left, top: e.pageY - $(canvas).offset().top, width: 0, height: 0});
@@ -100,10 +100,10 @@ $(function(){
       var ty = Math.min(by, ay);
       var rx = Math.max(bx, ax);
       var by = Math.max(by, ay);
-      var li = Math.floor((lx - Math.floor(lx / 120) * 2 - 5) / 23);
-      var tj = Math.floor((ty - Math.floor(ty / 120) * 2 - 5) / 23);
-      var ri = Math.floor((rx - Math.floor(rx / 120) * 2 - 5) / 23);
-      var bj = Math.floor((by - Math.floor(by / 120) * 2 - 5) / 23);
+      var li = Math.max(Math.floor((lx - Math.floor(lx / 120) * 2 - 5) / 23), -1);
+      var tj = Math.min(Math.floor((ty - Math.floor(ty / 120) * 2 - 5) / 23), 20);
+      var ri = Math.max(Math.floor((rx - Math.floor(rx / 120) * 2 - 5) / 23), -1);
+      var bj = Math.min(Math.floor((by - Math.floor(by / 120) * 2 - 5) / 23), 20);
       for (var i = li; i <= ri; i++) {
         for (var j = tj; j <= bj; j++) {
           toggleCell(i, j);
