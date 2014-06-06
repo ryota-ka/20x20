@@ -76,11 +76,11 @@ $(function(){
     }
   }
 
-  $(window).mousedown(function(e) {
+  $(document).mousedown(function(e) {
     var beforeX = e.pageX - $(canvas).offset().left;
     var beforeY = e.pageY - $(canvas).offset().top;
     $dragIndicator.show().css({left: e.pageX - $(canvas).offset().left, top: e.pageY - $(canvas).offset().top, width: 0, height: 0});
-    $(window).mousemove(function(e) {
+    $(document).mousemove(function(e) {
       var w = e.pageX - $(canvas).offset().left - beforeX;
       var h = e.pageY - $(canvas).offset().top - beforeY;
       if (w < 0) {
@@ -91,7 +91,7 @@ $(function(){
       }
       $dragIndicator.css({width: Math.abs(w), height: Math.abs(h)});
     });
-    $(window).mouseup(function(e) {
+    $(document).mouseup(function(e) {
       var bx = beforeX;
       var by = beforeY;
       var ax = e.pageX - $(canvas).offset().left;
@@ -109,7 +109,7 @@ $(function(){
           toggleCell(i, j);
         }
       }
-      $(window).unbind('mousemove').unbind('mouseup');
+      $(document).unbind('mousemove').unbind('mouseup');
       $dragIndicator.hide();
     });
   });
