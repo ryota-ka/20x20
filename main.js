@@ -182,6 +182,14 @@ $(function(){
     }
   });
 
+  function readCookie(key) {
+    return $.cookie(key);
+  }
+
+  function writeCookie(key, value) {
+    return $.cookie(key, value, {expires: 365});
+  }
+
   function getFromZero(i, j) {
     return 20 * (i - 1) + (j - 1);
   }
