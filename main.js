@@ -4,64 +4,68 @@ $(function(){
   cells = readCookie('cells') ? readCookie('cells') : '00000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
   $answers = $('#answers');
   $dragIndicator = $('#dragIndicator');
+  $left = $('#left');
+  $right = $('#right');
+  $answer = $('#answer');
 
   drawBackground();
   init();
 
+  $(window).keydown(function(e) {
+    keydownEvent(e);
+    return false;
+  });
+
   function init() {
     var pair = getPair();
-    var left = pair[0];
-    var right = pair[1];
-    $('#left').text(left);
-    $('#right').text(right);
-    $('#answer').text('?');
-    $('.current').removeClass('current');
-    $('#cell-' + left + '-' + right).addClass('current');
-    $(window).unbind().keydown(function(event){
-      if ((isTenKeys = (event.keyCode >= 96) && (event.keyCode <= 105)) || ((event.keyCode >= 48) && (event.keyCode <= 57))) {
-        text = $('#answer').text();
-        if (text.length < 3) {
-          number = event.keyCode - (isTenKeys ? 96 : 48);
-          if (text == '?') {
-            if (number != 0) {
-              $('#answer').text(number);
-            }
-          } else {
-            $('#answer').text(text + number);
+    $left.text(pair[0]);
+    $right.text(pair[1]);
+    $answer.text('?');
+  }
+
+  function keydownEvent(e) {
+    var text = $answer.text();
+    var isTenKeys = (e.which >= 96) && (e.which <= 105);
+    if (isTenKeys || ((e.which >= 48) && (e.which <= 57))) {
+      if (text.length < 3) {
+        number = e.which - (isTenKeys ? 96 : 48);
+        if (text === '?') {
+          if (number !== 0) {
+            $answer.text(number);
           }
-        }
-      } else if (event.keyCode == 8) {
-        text = $('#answer').text();
-        if (text.slice(0, -1) == '') {
-          $('#answer').text('?');
         } else {
-          $('#answer').text(text.slice(0, -1));
+          $answer.text(text + number);
         }
-        return false;
-      } else if (event.keyCode == 13) {
-        text = $('#answer').text();
-        if (text != '?') {
-          var correctAnswer = right * left;
-          var isCorrect = (text == correctAnswer);
-
-          $answers.prepend('<tr>'
-            + '<td class="isCorrect ' + (isCorrect ? 'correct' : 'wrong') + '"></td>'
-            + '<td class="left">' + left + '</td>'
-            + '<td class="times">×<td>'
-            + '<td class="right">' + right + '</td>'
-            + '<td class="equal">=</td>'
-            + '<td class="answer' + (isCorrect ? '' : ' wrong') + '"><span>' + text + '</span></td>'
-            + '<td class="correctAnswer">' + (isCorrect ? '' : correctAnswer) + '</td>'
-            + '</tr>');
-
-          if ($('#answers tr').length > 10) {
-            $('#answers tr:last-child').remove();
-          }
-          init();
-        }
-        return false;
       }
-    });
+    } else if (e.which === 8) {
+      if (text.slice(0, -1) === '') {
+        $answer.text('?');
+      } else {
+        $answer.text(text.slice(0, -1));
+      }
+    } else if (e.which === 13) {
+      if (text !== '?') {
+        var left = $left.text();
+        var right = $right.text();
+        var correctAnswer = right * left;
+        var isCorrect = (parseInt(text) === correctAnswer);
+
+        $answers.prepend('<tr>'
+          + '<td class="isCorrect ' + (isCorrect ? 'correct' : 'wrong') + '"></td>'
+          + '<td class="left">' + left + '</td>'
+          + '<td class="times">×<td>'
+          + '<td class="right">' + right + '</td>'
+          + '<td class="equal">=</td>'
+          + '<td class="answer' + (isCorrect ? '' : ' wrong') + '"><span>' + text + '</span></td>'
+          + '<td class="correctAnswer">' + (isCorrect ? '' : correctAnswer) + '</td>'
+          + '</tr>');
+
+        if ($('#answers tr').length > 10) {
+          $('#answers tr:last-child').remove();
+        }
+        init();
+      }
+    }
   }
 
   function drawBackground() {
@@ -139,61 +143,12 @@ $(function(){
     writeCookie('cells', cells);
   }
 
-  $('.cell').click(function(event){
-    str = $(this).attr('id').split('-');
-    i_this = str[1];
-    j_this = str[2];
-    if (event.shiftKey && $('.cell').hasClass('newest') && ($('.newest').hasClass('disabled') ^ $(this).hasClass('disabled'))) {
-      str = $(".newest").attr('id').split('-');
-      i_newest = str[1];
-      j_newest = str[2];
-
-      i_smaller = i_newest <= i_this ? i_newest : i_this;
-      i_bigger = i_newest <= i_this ? i_this : i_newest;
-      j_smaller = j_newest <= j_this ? j_newest : j_this;
-      j_bigger = j_newest <= j_this ? j_this : j_newest;
-
-      for (i=i_smaller; i<=i_bigger; i++) {
-        for (j=j_smaller; j<=j_bigger; j++) {
-          if ($('.newest').hasClass('disabled')) {
-            $('#cell-' + i + '-' + j).addClass('disabled');
-          } else {
-            $('#cell-' + i + '-' + j).removeClass('disabled');
-          }
-        }
-      }
-      $('.cell').removeClass('newest');
-      if ($('.disabled').length == 400) {
-        $('#cell-1-1').removeClass('disabled');
-      }
-      var data = '';
-      for (i=0; i<20; i++) {
-        for (j=0; j<20; j++) {
-          data += $('#cell-' + (i+1) + '-' + (j+1)).hasClass('disabled') ? 0 : 1;
-        }
-      }
-      writeCookie(data);
-    } else {
-      $('.cell').removeClass('newest');
-      $(this).toggleClass('disabled').addClass('newest');
-      if ($('.disabled').length == 400) {
-        $(this).toggleClass('disabled');
-      } else {
-        writeCell(i_this, j_this, !$(this).hasClass('disabled'));
-      }
-    }
-  });
-
   function readCookie(key) {
     return $.cookie(key);
   }
 
   function writeCookie(key, value) {
     return $.cookie(key, value, {expires: 365});
-  }
-
-  function getFromZero(i, j) {
-    return 20 * (i - 1) + (j - 1);
   }
 
   $('#closehelp').click(function(){
