@@ -1,10 +1,7 @@
 $(function(){
   canvas = document.getElementById('background');
   ctx = canvas.getContext('2d');
-  cells = new Array(400);
-  for (var i = 0; i < 400; i++) {
-    cells[i] = true;
-  }
+  cells = readCookie('cells') ? readCookie('cells') : '00000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
   $answers = $('#answers');
   $dragIndicator = $('#dragIndicator');
 
@@ -68,9 +65,9 @@ $(function(){
   }
 
   function drawBackground() {
-    ctx.fillStyle = 'rgba(64, 64, 224, 0.7)';
     for (var i = 0; i < 20; i++) {
       for (var j = 0; j < 20; j++) {
+        ctx.fillStyle = parseInt(cells[i * 20 + j]) ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
         ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
       }
     }
@@ -109,6 +106,7 @@ $(function(){
           toggleCell(i, j);
         }
       }
+      saveCells();
       $(document).unbind('mousemove').unbind('mouseup');
       $dragIndicator.hide();
     });
@@ -116,9 +114,9 @@ $(function(){
 
   function getPair() {
     var arr = new Array(), pair = new Array(2), num;
-    for (var key in cells) {
-      if (cells[key]) {
-        arr.push(key);
+    for (var i = 0; i < 400; i++) {
+      if (cells[i]) {
+        arr.push(i);
       }
     }
     num = Math.floor(Math.random() * arr.length);
@@ -130,11 +128,15 @@ $(function(){
   function toggleCell(i, j) {
     if (i >= 0 && i < 20 && j>= 0 && j < 20) {
       var index = 20 * i + j;
-      cells[index] = !cells[index];
+      cells = cells.substr(0, index) + (1 - cells[index]) + cells.substr(index + 1);
       ctx.clearRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
-      ctx.fillStyle = cells[index] ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
+      ctx.fillStyle = parseInt(cells[index]) ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
       ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
     }
+  }
+
+  function saveCells() {
+    writeCookie('cells', cells);
   }
 
   $('.cell').click(function(event){
