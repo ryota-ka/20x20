@@ -115,7 +115,7 @@ $(function(){
   function getPair() {
     var arr = new Array(), pair = new Array(2), num;
     for (var i = 0; i < 400; i++) {
-      if (cells[i]) {
+      if (parseInt(cells[i])) {
         arr.push(i);
       }
     }
