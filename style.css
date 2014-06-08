@@ -7,11 +7,11 @@ body {
   background-color: #fcfcfc;
   font-family: 'Open Sans', san-serif;
   font-weight: 300;
-}
-
-input {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   cursor: default;
-  opacity: 0.8;
 }
 
 #calc {
