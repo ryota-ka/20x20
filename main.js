@@ -2,6 +2,7 @@ $(function(){
   canvas = document.getElementById('background');
   ctx = canvas.getContext('2d');
   cells = readCookie('cells') ? readCookie('cells') : '00000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111000000000011111111110000000000111111111100000000001111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
+  selectedCells = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
   $answers = $('#answers');
   $dragIndicator = $('#dragIndicator');
   $left = $('#left');
@@ -65,16 +66,59 @@ $(function(){
         }
         init();
       }
+    } else if (e.which === 65) { // A: Select all cells
+      selectedCells = '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111';
+      drawBackground();
+    } else if (e.which === 68) { // D: Disable selected cells
+      var result = '';
+      for (var i = 0; i < 400; i++) {
+        result += parseInt(selectedCells[i]) ? 0 : cells[i];
+      }
+      cells = result;
+      drawBackground();
+    } else if (e.which === 69) { // E: Enable selected cells
+      var result = '';
+      for (var i = 0; i < 400; i++) {
+        result += parseInt(selectedCells[i]) ? 1 : cells[i];
+      }
+      cells = result;
+      drawBackground();
+    } else if (e.which === 73) { // I: Invert selection
+      var result = '';
+      for (var i = 0; i < 400; i++) {
+        result += 1 - selectedCells[i];
+      }
+      selectedCells = result;
+      drawBackground();
+    } else if (e.which === 78) { // N: Select no cells
+      selectedCells = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
+      drawBackground();
+    } else if (e.which === 84) { // T: Toggle selected cells
+      var result = '';
+      for (var i = 0; i < 400; i++) {
+        result += parseInt(selectedCells[i]) ? 1 - cells[i] : cells[i];
+      }
+      cells = result;
+      drawBackground();
     }
   }
 
   function drawBackground() {
+    ctx.clearRect(0, 0, 500, 500);
     for (var i = 0; i < 20; i++) {
       for (var j = 0; j < 20; j++) {
-        ctx.fillStyle = parseInt(cells[i * 20 + j]) ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
-        ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
+        var index = i * 20 + j;
+        ctx.fillStyle = parseInt(cells[index]) ? 'rgba(64, 64, 224, 0.5)' : 'rgba(64, 64, 64, 0.5)';
+        var posX = 5 + i * 23 + Math.floor(i / 5) * 2;
+        var posY = 5 + j * 23 + Math.floor(j / 5) * 2;
+        ctx.fillRect(posX, posY, 20, 20);
+        if (parseInt(selectedCells[index])) {
+          ctx.fillStyle = 'rgb(224, 224, 64)';
+          ctx.fillRect(posX, posY, 5, 5);
+        }
       }
     }
+    saveCells();
   }
 
   $(document).mousedown(function(e) {
@@ -105,12 +149,13 @@ $(function(){
       var tj = Math.min(Math.floor((ty - Math.floor(ty / 120) * 2 - 5) / 23), 20);
       var ri = Math.max(Math.floor((rx - Math.floor(rx / 120) * 2 - 5) / 23), -1);
       var bj = Math.min(Math.floor((by - Math.floor(by / 120) * 2 - 5) / 23), 20);
+      selectedCells = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
       for (var i = li; i <= ri; i++) {
         for (var j = tj; j <= bj; j++) {
-          toggleCell(i, j);
+          toggleSelected(i, j);
         }
       }
-      saveCells();
+      drawBackground();
       $(document).unbind('mousemove').unbind('mouseup');
       $dragIndicator.hide();
     });
@@ -134,8 +179,15 @@ $(function(){
       var index = 20 * i + j;
       cells = cells.substr(0, index) + (1 - cells[index]) + cells.substr(index + 1);
       ctx.clearRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
-      ctx.fillStyle = parseInt(cells[index]) ? 'rgba(64, 64, 224, 0.7)' : 'rgba(64, 64, 64, 0.7)';
+      ctx.fillStyle = parseInt(cells[index]) ? 'rgba(64, 64, 224, 0.5)' : 'rgba(64, 64, 64, 0.5)';
       ctx.fillRect(5 + i * 23 + Math.floor(i / 5) * 2, 5 + j * 23 + Math.floor(j / 5) * 2, 20, 20);
+    }
+  }
+
+  function toggleSelected(i, j) {
+    if (i >= 0 && i < 20 && j>= 0 && j < 20) {
+      var index = 20 * i + j;
+      selectedCells = selectedCells.substr(0, index) + (1 - selectedCells[index]) + selectedCells.substr(index + 1);
     }
   }
 
