@@ -3,6 +3,8 @@ $(function(){
   ctx = canvas.getContext('2d');
   cells = readCookie('cells') ? decode(readCookie('cells')) : decode('00vv00vv00vv00vv00vv00vv00vv00vv00vv00vv0000000000000000000000000000000000000000');
   selectedCells = decode('00000000000000000000000000000000000000000000000000000000000000000000000000000000');
+  history = [];
+  hIndex = 0;
   $answers = $('#answers');
   $dragIndicator = $('#dragIndicator');
   $left = $('#left');
@@ -10,6 +12,7 @@ $(function(){
   $answer = $('#answer');
 
   drawBackground();
+  saveHistory();
   init();
 
   $(window).keydown(function(e) {
@@ -69,6 +72,7 @@ $(function(){
     } else if (e.which === 65) { // A: Select all cells
       selectedCells = decode('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
       drawBackground();
+      saveHistory();
     } else if (e.which === 68) { // D: Disable selected cells
       var result = '';
       for (var i = 0; i < 400; i++) {
@@ -76,6 +80,7 @@ $(function(){
       }
       cells = result;
       drawBackground();
+      saveHistory();
     } else if (e.which === 69) { // E: Enable selected cells
       var result = '';
       for (var i = 0; i < 400; i++) {
@@ -83,6 +88,7 @@ $(function(){
       }
       cells = result;
       drawBackground();
+      saveHistory();
     } else if (e.which === 73) { // I: Invert selection
       var result = '';
       for (var i = 0; i < 400; i++) {
@@ -90,9 +96,11 @@ $(function(){
       }
       selectedCells = result;
       drawBackground();
+      saveHistory();
     } else if (e.which === 78) { // N: Select no cells
       selectedCells = decode('00000000000000000000000000000000000000000000000000000000000000000000000000000000');
       drawBackground();
+      saveHistory();
     } else if (e.which === 84) { // T: Toggle selected cells
       var result = '';
       for (var i = 0; i < 400; i++) {
@@ -100,6 +108,21 @@ $(function(){
       }
       cells = result;
       drawBackground();
+      saveHistory();
+    } else if (e.which === 89) { // Y: Redo
+      if (hIndex < history.length - 1) {
+        hIndex++;
+        cells = decode(history[hIndex].substr(0, 80));
+        selectedCells = decode(history[hIndex].substr(80, 80));
+        drawBackground();
+      }
+    } else if (e.which === 90) { // Z: Undo
+      if (hIndex > 0) {
+        hIndex--;
+        cells = decode(history[hIndex].substr(0, 80));
+        selectedCells = decode(history[hIndex].substr(80, 80));
+        drawBackground();
+      }
     }
   }
 
@@ -156,6 +179,7 @@ $(function(){
         }
       }
       drawBackground();
+      saveHistory();
       $(document).unbind('mousemove').unbind('mouseup');
       $dragIndicator.hide();
     });
@@ -193,6 +217,18 @@ $(function(){
 
   function saveCells() {
     writeCookie('cells', encode(cells));
+  }
+
+  function saveHistory() {
+    if (hIndex === history.length - 1) {
+      if (history.length > 63) {
+        history.shift();
+      }
+    } else {
+      history = history.slice(0, hIndex + 1);
+    }
+    history.push(encode(cells) + encode(selectedCells));
+    hIndex = history.length - 1;
   }
 
   function readCookie(key) {
