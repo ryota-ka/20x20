@@ -27,6 +27,30 @@ $(function(){
 
   function init() {
     var pair = getPair();
+    var i, j, posX, posY;
+
+    i = parseInt($right.text()) - 1;
+    j = parseInt($left.text()) - 1;
+    posX = 5 + i * 23 + Math.floor(i / 5) * 2;
+    posY = 5 + j * 23 + Math.floor(j / 5) * 2;
+    ctx.fillStyle = parseInt(cells[20 * i + j]) ? '#66a9ec' : '#aaa';
+    ctx.fillRect(posX, posY, 20, 20);
+    if (parseInt(selectedCells[i * 20 + j])) {
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(posX + 9, posY + 9, 2, 2);
+    }
+
+    i = pair[0] - 1;
+    j = pair[1] - 1;
+    ctx.fillStyle = '#ee9';
+    posX = 5 + j * 23 + Math.floor(j / 5) * 2;
+    posY = 5 + i * 23 + Math.floor(i / 5) * 2;
+    ctx.fillRect(posX, posY, 20, 20);
+    if (parseInt(selectedCells[(pair[1] - 1) * 20 + pair[0] - 1])) {
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(posX + 9, posY + 9, 2, 2);
+    }
+
     $left.text(pair[0]);
     $right.text(pair[1]);
     $answer.text('?');
@@ -138,13 +162,17 @@ $(function(){
     for (var i = 0; i < 20; i++) {
       for (var j = 0; j < 20; j++) {
         var index = i * 20 + j;
-        ctx.fillStyle = parseInt(cells[index]) ? '#9e8cee' : '#999';
+        if (index === getIndex(parseInt($right.text()), parseInt($left.text()))) {
+          ctx.fillStyle = '#ee9';
+        } else {
+          ctx.fillStyle = parseInt(cells[index]) ? '#66a9ec' : '#aaa';
+        }
         var posX = 5 + i * 23 + Math.floor(i / 5) * 2;
         var posY = 5 + j * 23 + Math.floor(j / 5) * 2;
         ctx.fillRect(posX, posY, 20, 20);
         if (parseInt(selectedCells[index])) {
-          ctx.fillStyle = '#e66';
-          ctx.fillRect(posX + 8, posY + 8, 4, 4);
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(posX + 9, posY + 9, 2, 2);
         }
       }
     }
