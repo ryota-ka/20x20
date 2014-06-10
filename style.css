@@ -117,6 +117,7 @@ td.correctAnswer {
 }
 
 #help {
+  display: none;
   position: absolute;
   left: 15%;
   top: 25%;

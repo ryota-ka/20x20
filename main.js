@@ -12,6 +12,10 @@ $(function(){
   $answer = $('#answer');
   $help = $('#help');
 
+  if (!readCookie('cells')) {
+    $help.show();
+  }
+
   drawBackground();
   saveHistory();
   init();
