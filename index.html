@@ -22,16 +22,25 @@
     </table>
 
     <div id="help">
-      <ul>
-        <li>0-9: 数字を入力</li>
-        <li>Enter: 答え合わせ</li>
-        <li>Backspace: 一文字削除</li>
-        <li>右下のマスをクリックすると出題される問題を選択できます</li>
-        <li>Shiftを押しながらクリックすると矩形選択ができます</li>
-        <li>IMEがオンになっていると正常に動作しません</li>
-      </ul>
-      <p id="closehelp">close</p>
+      <table id="shortcuts">
+        <tbody>
+          <tr class="important"><td>[0] - [9]</td><td>数字を入力</td></tr>
+          <tr class="important"><td>[Enter]</td><td>答え合わせ</td></tr>
+          <tr class="important"><td>[Backspace]</td><td>数字を一文字削除</td></tr>
+          <tr><td>[A]</td><td>すべてのセルを選択</td></tr>
+          <tr><td>[D]</td><td>選択したセルを無効化</td></tr>
+          <tr><td>[E]</td><td>選択したセルを有効化</td></tr>
+          <tr><td>[I]</td><td>選択範囲を反転</td></tr>
+          <tr><td>[N]</td><td>セルの選択を解除</td></tr>
+          <tr><td>[T]</td><td>選択したセルの有効/無効を切り替え</td></tr>
+          <tr><td>[Y]</td><td>やり直す</td></tr>
+          <tr><td>[Z]</td><td>元に戻す</td></tr>
+        </tbody>
+      </table>
+      <p id="closehelp">×</p>
     </div>
+
+    <p id="showHelp">?</p>
 
     <div id="bgwrapper">
       <canvas id="background" width="500" height="500"></canvas>
