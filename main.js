@@ -1,7 +1,7 @@
 $(function(){
   canvas = document.getElementById('background');
   ctx = canvas.getContext('2d');
-  cells = readCookie('cells') ? decode(readCookie('cells')) : decode('00vv00vv00vv00vv00vv00vv00vv00vv00vv00vv0000000000000000000000000000000000000000');
+  cells = readCookie('cells') ? decode(readCookie('cells')) : decode('00vv00vv00vv00vv00vv00vv00vv00vv00vv00vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
   selectedCells = decode('00000000000000000000000000000000000000000000000000000000000000000000000000000000');
   history = [];
   hIndex = 0;
