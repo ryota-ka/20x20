@@ -138,13 +138,13 @@ $(function(){
     for (var i = 0; i < 20; i++) {
       for (var j = 0; j < 20; j++) {
         var index = i * 20 + j;
-        ctx.fillStyle = parseInt(cells[index]) ? 'rgba(64, 64, 224, 0.5)' : 'rgba(64, 64, 64, 0.5)';
+        ctx.fillStyle = parseInt(cells[index]) ? '#9e8cee' : '#999';
         var posX = 5 + i * 23 + Math.floor(i / 5) * 2;
         var posY = 5 + j * 23 + Math.floor(j / 5) * 2;
         ctx.fillRect(posX, posY, 20, 20);
         if (parseInt(selectedCells[index])) {
-          ctx.fillStyle = 'rgb(224, 224, 64)';
-          ctx.fillRect(posX, posY, 5, 5);
+          ctx.fillStyle = '#e66';
+          ctx.fillRect(posX + 8, posY + 8, 4, 4);
         }
       }
     }
