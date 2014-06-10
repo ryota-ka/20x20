@@ -138,7 +138,7 @@ $(function(){
     for (var i = 0; i < 20; i++) {
       for (var j = 0; j < 20; j++) {
         var index = i * 20 + j;
-        ctx.fillStyle = parseInt(cells[index]) ? '#9e8cee' : '#999';
+        ctx.fillStyle = parseInt(cells[index]) ? '#66a9ec' : '#aaa';
         var posX = 5 + i * 23 + Math.floor(i / 5) * 2;
         var posY = 5 + j * 23 + Math.floor(j / 5) * 2;
         ctx.fillRect(posX, posY, 20, 20);
