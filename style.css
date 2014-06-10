@@ -175,3 +175,9 @@ td.correctAnswer {
   background-color: #bbb;
   font-size: 1.1em;
 }
+
+#ads {
+  position: absolute;
+  left: 30px;
+  bottom: 20px;
+}
