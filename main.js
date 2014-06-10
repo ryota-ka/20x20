@@ -188,13 +188,18 @@ $(function(){
   function getPair() {
     var arr = new Array(), pair = new Array(2), num;
     for (var i = 0; i < 400; i++) {
-      if (parseInt(cells[i])) {
+      if (parseInt(cells[i]) && (i !== getIndex(parseInt($right.text()), parseInt($left.text())))) {
         arr.push(i);
       }
     }
-    num = Math.floor(Math.random() * arr.length);
-    pair[1] = Math.floor(arr[num] / 20) + 1;
-    pair[0] = (arr[num] % 20) + 1;
+    if (arr.length) {
+      num = Math.floor(Math.random() * arr.length);
+      pair[1] = Math.floor(arr[num] / 20) + 1;
+      pair[0] = (arr[num] % 20) + 1;
+    } else {
+      pair[0] = parseInt($left.text());
+      pair[1] = parseInt($right.text());
+    }
     return pair;
   }
 
@@ -245,6 +250,10 @@ $(function(){
 
   function showHelp() {
     $('#help').show();
+  }
+
+  function getIndex(left, right) {
+    return (parseInt(left) - 1) * 20 + parseInt(right) - 1;
   }
 
   function encode(str) {
