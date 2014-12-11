@@ -1,0 +1,26 @@
+{
+  "name": "20x20",
+  "version": "2.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryota-ka/20x20.git"
+  },
+  "author": "Ryota Kameoka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryota-ka/20x20/issues"
+  },
+  "homepage": "https://github.com/ryota-ka/20x20",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.12.0",
+    "grunt-contrib-jade": "^0.13.0",
+    "grunt-contrib-sass": "^0.8.1",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
