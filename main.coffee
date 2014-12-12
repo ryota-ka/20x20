@@ -60,8 +60,13 @@ class App
         )
       )
       $doms.answers.children().last().remove() if $doms.answers.children().length > 10
+      @updateQuestion()
+
+    updateQuestion: ->
       [numbers[0], numbers[1], numbers[2]] = [null, null, null]
       @updateAnswer()
+      $doms.left.text(Math.floor(Math.random() * 20) + 1)
+      $doms.right.text(Math.floor(Math.random() * 20) + 1)
 
   @getSingletonInstance: ->
     sharedInstance ?= new PrivateClass

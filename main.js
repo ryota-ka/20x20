@@ -87,15 +87,22 @@
       };
 
       PrivateClass.prototype.updateAnswersTable = function(left, right, answer) {
-        var correctAnswer, isCorrect, _ref;
+        var correctAnswer, isCorrect;
         correctAnswer = left * right;
         isCorrect = answer === left * right;
         $doms.answers.prepend($('<tr />').append($('<td />').addClass('isCorrect ' + (isCorrect ? 'correct' : 'wrong')), $('<td />').addClass('left').text(left), $('<td />').addClass('times').text('×'), $('<td />').addClass('right').text(right), $('<td />').addClass('equal').text('='), $('<td />').addClass('answer' + (isCorrect ? '' : ' wrong')).text(answer), $('<td />').addClass('correct-answer').text(isCorrect ? '' : correctAnswer)));
         if ($doms.answers.children().length > 10) {
           $doms.answers.children().last().remove();
         }
+        return this.updateQuestion();
+      };
+
+      PrivateClass.prototype.updateQuestion = function() {
+        var _ref;
         _ref = [null, null, null], numbers[0] = _ref[0], numbers[1] = _ref[1], numbers[2] = _ref[2];
-        return this.updateAnswer();
+        this.updateAnswer();
+        $doms.left.text(Math.floor(Math.random() * 20) + 1);
+        return $doms.right.text(Math.floor(Math.random() * 20) + 1);
       };
 
       return PrivateClass;
