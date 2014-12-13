@@ -7,10 +7,18 @@ module.exports = (grunt) ->
         files:
           'main.js': 'main.coffee'
 
+    sass:
+      compile:
+        files:
+          'style.css': 'style.scss'
+
     watch:
       coffee:
         files: ['main.coffee']
         tasks: 'coffee'
+      sass:
+        files: ['style.scss']
+        tasks: 'sass'
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
