@@ -12,6 +12,11 @@ module.exports = (grunt) ->
         files:
           'style.css': 'style.scss'
 
+    jade:
+      compile:
+        files:
+          'index.html': 'index.jade'
+
     watch:
       coffee:
         files: ['main.coffee']
@@ -19,6 +24,9 @@ module.exports = (grunt) ->
       sass:
         files: ['style.scss']
         tasks: 'sass'
+      jade:
+        files: ['index.jade']
+        tasks: 'jade'
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
