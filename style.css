@@ -1,7 +1,6 @@
 * {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 body {
   background-color: #fcfcfc;
@@ -11,34 +10,27 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  cursor: default;
-}
+  cursor: default; }
 
 #calc {
   margin-left: 100px;
   margin-top: 50px;
   padding: 0;
-  opacity:0.8;
+  opacity: 0.8;
   color: #666;
-  font-size: 80px;
-}
-
-#calc p {
-  float: left;
-  text-align: center;
-}
+  font-size: 80px; }
+  #calc div {
+    float: left;
+    text-align: center; }
 
 #left, #right {
-  width: 95px;
-}
+  width: 95px; }
 
 #times, #equal {
-  width: 80px;
-}
+  width: 80px; }
 
 #answer {
-  width: 120px;
-}
+  width: 120px; }
 
 #answers {
   clear: left;
@@ -46,138 +38,68 @@ body {
   font-size: 30px;
   margin-left: 150px;
   padding-top: 30px;
-  border-spacing: 2px 4px;
-}
-
-#answers tr {
-  height: 40px;
-  margin: 0;
-}
-
-td.isCorrect {
-  width: 4px;
-}
-
-td.isCorrect.correct {
-  background-color: #2ecc71;
-}
-
-td.isCorrect.wrong {
-  background-color: #e74c3c;
-}
-
-td.left {
-  padding-left: 7px;
-}
-
-td.left, td.right, td.equal {
-  width: 35px;
-  text-align: center;
-}
-
-td.times {
-  text-align: center;
-  width: 30px;
-}
-
-td.answer.wrong {
-  text-decoration: line-through;
-  color: #e74c3c;
-  padding-right: 10px;
-}
-
-td.answer.wrong span {
-  color: #888;
-}
-
-td.correctAnswer {
-  text-align: center;
-  color: #e74c3c;
-}
-
-#bgwrapper {
-  padding: 0;
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  right: 0;
-  bottom: 0;
-}
+  border-spacing: 2px 4px; }
+  #answers tr {
+    height: 40px;
+    margin: 0; }
+    #answers tr td.isCorrect {
+      width: 4px; }
+      #answers tr td.isCorrect.correct {
+        background-color: #2ecc71; }
+      #answers tr td.isCorrect.wrong {
+        background-color: #e74c3c; }
+    #answers tr td.left {
+      padding-left: 7px; }
+    #answers tr td.left, #answers tr td.right, #answers tr td.equal {
+      width: 35px;
+      text-align: center; }
+    #answers tr td.times {
+      text-align: center;
+      width: 30px; }
+    #answers tr td.answer.wrong {
+      text-decoration: line-through;
+      color: #e74c3c;
+      padding-right: 10px; }
+      #answers tr td.answer.wrong span {
+        color: #888; }
+    #answers tr td.correctAnswer {
+      text-align: center;
+      color: #e74c3c; }
 
 #background {
-  position: absolute;
-}
-
-#dragIndicator {
-  display: none;
-  position: absolute;
-  box-sizing: border-box;
-  background-color: rgba(255, 255, 192, 0.3);
-  border: 1px solid rgba(244, 244, 128, 0.5);
-}
-
-#help {
-  display: none;
-  position: absolute;
-  left: 15%;
-  top: 25%;
-  background-color: #444;
-  color: white;
-  font-family: 'HiraKakuProN-W3', 'Meiryo';
-  -webkit-font-smoothing: antialiased;
-  width: 70%;
-  height: 50%;
-  padding: 15px;
-  z-index: 1;
-}
-
-#help li {
-  list-style-type: none;
-  margin: 5px;
-}
-
-#shortcuts td:first-child {
-  font-family: monospace;
-  color: #ee8;
-  font-size: 1.2em;
-  padding-right: 10px;
-}
-
-#shortcuts .important td:first-child {
-  color: #6e6;
-}
-
-#closehelp {
-  position: absolute;
-  left: -10px;
-  top: -10px;
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  background-color: #444;
-  font-size: 1.2em;
-  line-height: 20px;
-  text-align: center;
-  cursor: pointer;
-}
-
-#showHelp {
-  position: absolute;
+  position: fixed;
   right: 30px;
-  top: 30px;
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  text-align: center;
-  line-height: 24px;
-  cursor: pointer;
-  color: #fff;
-  background-color: #bbb;
-  font-size: 1.1em;
-}
-
-#ads {
-  position: absolute;
-  left: 30px;
-  bottom: 20px;
-}
+  bottom: 30px; }
+  #background .row {
+    width: 500px;
+    height: 20px; }
+  #background .button-row, #background .cell {
+    float: left;
+    margin: 1px; }
+  #background .button {
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    font-size: 0px;
+    cursor: pointer;
+    background-color: #ccc; }
+    #background .button:hover {
+      font-size: 14px; }
+    #background .button.button-row {
+      width: 50px;
+      margin-right: 3px; }
+    #background .button.button-column {
+      width: 218px;
+      margin-left: 275px;
+      margin-bottom: 2px; }
+    #background .button:hover {
+      background-color: #eeb; }
+  #background .cell {
+    width: 20px;
+    height: 20px;
+    background-color: #66a9ec; }
+  #background.half .cell.great {
+    background-color: #ccc !important; }
+  #background .disabled .cell {
+    background-color: #ccc; }

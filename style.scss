@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fcfcfc;
+  font-family: 'Open Sans', san-serif;
+  font-weight: 300;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+#calc {
+  margin-left: 100px;
+  margin-top: 50px;
+  padding: 0;
+  opacity:0.8;
+  color: #666;
+  font-size: 80px;
+
+  div {
+    float: left;
+    text-align: center;
+  }
+}
+
+#left, #right {
+  width: 95px;
+}
+
+#times, #equal {
+  width: 80px;
+}
+
+#answer {
+  width: 120px;
+}
+
+#answers {
+  clear: left;
+  color: #888;
+  font-size: 30px;
+  margin-left: 150px;
+  padding-top: 30px;
+  border-spacing: 2px 4px;
+
+  tr {
+    height: 40px;
+    margin: 0;
+
+    td {
+      &.isCorrect {
+        width: 4px;
+        &.correct {
+          background-color: #2ecc71;
+        }
+        &.wrong {
+          background-color: #e74c3c;
+        }
+      }
+      &.left {
+        padding-left: 7px;
+      }
+      &.left, &.right, &.equal {
+        width: 35px;
+        text-align: center;
+      }
+      &.times {
+        text-align: center;
+        width: 30px;
+      }
+      &.answer {
+        &.wrong {
+          text-decoration: line-through;
+          color: #e74c3c;
+          padding-right: 10px;
+          span {
+            color: #888;
+          }
+        }
+      }
+      &.correctAnswer {
+        text-align: center;
+        color: #e74c3c;
+      }
+    }
+  }
+}
+
+
+
+#background {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+
+  .row {
+    width: 500px;
+    height: 20px;
+  }
+  .button-row, .cell {
+    float: left;
+    margin: 1px;
+  }
+  .button {
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    font-size: 0px;
+    cursor: pointer;
+    background-color: #ccc;
+    &:hover {
+      font-size: 14px;
+    }
+    &.button-row {
+      width: 50px;
+      margin-right: 3px;
+    }
+    &.button-column {
+      width: 218px;
+      margin: {
+        left: 275px;
+        bottom: 2px;
+      }
+    }
+    &:hover {
+      background-color: #eeb;
+    }
+  }
+  .cell {
+    width: 20px;
+    height: 20px;
+    background-color: #66a9ec;
+  }
+  &.half {
+    .cell.great {
+      background-color: #ccc !important;
+    }
+  }
+  .disabled {
+    .cell {
+      background-color: #ccc;
+    }
+  }
+}
